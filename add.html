@@ -284,19 +284,26 @@
                     todayHighlight: true,
                     clearBtn: true
                 });
-            });
-        </script>
-        <script type="text/javascript">
-            $(document).ready(function(){
+                $( "#startDate" ).datepicker( "setDate", new Date()).on('changeDate', function(){
+                     // set the "statusUpdatedDate" start to not be earlier than "encounteredDate" start:
+                        $('#exitDate').datepicker(
+                            'setStartDate', new Date($(this).val()));
+                        $('#exitDate').datepicker(
+                            'setDate', new Date($(this).val()));
+                });
+
                 $('#exitDate').datepicker({
                     format: "yyyy-mm-dd",
                     autoclose: true,
                     todayHighlight: true,
                     clearBtn: true
                 });
-            });
+                $( "#exitDate" ).datepicker( "setDate", new Date($('#startDate').val()));
+
+          });
         </script>
         <script type="text/javascript">
+
             $(document).ready(function(){
                 $('#statusUpdatedDate').datepicker({
                     format: "yyyy-mm-dd",
@@ -304,16 +311,17 @@
                     todayHighlight: true,
                     clearBtn: true
                 });
-            });
-        </script>
-        <script type="text/javascript">
-            $(document).ready(function(){
+                $( "#statusUpdatedDate" ).datepicker( "setDate", new Date());
+
+
+
                 $('#encounteredDate').datepicker({
                     format: "yyyy-mm-dd",
                     autoclose: true,
                     todayHighlight: true,
                     clearBtn: true
                 });
+                $( "#encounteredDate" ).datepicker( "setDate", new Date());
             });
         </script>
    </body>
