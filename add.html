@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+   <head>  
+        <!--jQuery-->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <!--Bootstrap 4 Javascript-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+        <!--Bootstrap datepicker-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
+        <!--Bootstrap-select-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/i18n/defaults-*.min.js"></script>
+
+        <!--Bootstrap 4 CSS-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <!--Bootstrap datepicker-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css">
+        <!--Bootstrap-select-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+        <!--open iconic-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" integrity="sha256-BJ/G+e+y7bQdrYkS2RBTyNfBHpA9IuGaPmf9htub5MQ=" crossorigin="anonymous" />
+        <title>add</title>
+   </head>
+   <body>
+        <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+            <div class="navbar-header">
+                <a href="/" class="navbar-brand">Potential Deal</a>
+            </div>
+        </nav>
+        <div class="container-fluid">
+            <form action = "{{ request.path }}" class="needs-validation" method = "post" autocomplete=off novalidate>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <nav class="nav flex-column bg-light">
+                            <a class="p-1 nav-link active" id="addBtn" href="/add">Add deal</a>
+                            <a class="p-1 nav-link" id="editBtn" href="/edit">Edit deal</a>
+                            <a class="p-1 nav-link" id="reportBtn" href="/report_selector">Deals report</a>
+                            <a class="p-1 nav-link text-muted" id="searchBtn" href="/searchDeal">Search deals (WIP)</a>
+                            <a class="p-1 nav-link" data-toggle="collapse" href="#adminMeun" role="button" aria-expanded="false" aria-controls="adminMeun">
+                                Administration  <span class="oi oi-caret-bottom"></span>
+                            </a>
+                            <div class="collapse" id="adminMeun">
+                                <a class="p-1 nav-link" id="imBtn" href="/admin_investmentManager_select">Add Investment Manager</a>
+                                <a class="p-1 nav-link" id="groupBtn" href="/admin_deal_group_select">Add Group</a>
+                                <a class="p-1 nav-link" id="cpBtn" href="/admin_counterparty_select">Add Counterparty</a>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h5>Project Info.</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <label for="manager">Investment Manager</label>
+                                                <button class="btn btn-outline-dark btn-labeled btn-sm mr-2 ml-4" type="button" onclick="addImElement()"><span class="oi oi-plus"></span</button>
+                                                <button class="btn btn-outline-dark btn-labeled btn-sm" type="button" onclick="removeImElement()"><span class="oi oi-minus"></span</button>
+                                            </div>
+                                        </div>
+                                        <select class="selectpicker form-control" data-size="5" id="manager1" name="manager1">
+                                            {% for manager in managers %}<option value="{{manager.im_id}}">{{manager.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <select class="selectpicker form-control mt-2" data-size="5" id="manager2" name="manager2">
+                                            {% for manager in managers %}<option value="{{manager.im_id}}">{{manager.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <select class="selectpicker form-control mt-2" data-size="5" id="manager3" name="manager3">
+                                            {% for manager in managers %}<option value="{{manager.im_id}}">{{manager.name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <label for="country">Group</label>
+                                        <select class="selectpicker form-control" data-live-search="true" data-size="5" id="group" name="group">
+                                            {% for group in groups %}<option value="{{group.group_id}}">{{group.group_name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="country">Country</label>
+                                        <select class="selectpicker form-control" data-live-search="true" data-size="5" id="country" name="country">
+                                            {% for country in countries %}<option value="{{country.country_id}}">{{country.country}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <label for="name">Project Name</label>
+                                        <input type="text" class="form-control" name="name" id="name" required/>
+                                        <div class="invalid-feedback">
+                                                Please input project name
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="dealsize">Deal Size</label>
+                                        <input type="number" class="form-control" name="dealsize" id="dealsize"/>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-12">
+                                        <label for="name">Description</label>
+                                        <input type="text" class="form-control" name="description" id="description"/>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="form-check ml-4">
+                                        <input type="checkbox" class="form-check-input" id="dateTBC">
+                                        <label class="form-check-label" for="dateTBC">Date TBC</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="startDate">Deal Initiation Date</label>
+                                            <input type="text" class="form-control" name="startDate" id="startDate">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="exitDate">Expected Exit Date</label>
+                                            <input type="text" class="form-control" name="exitDate" id="exitDate">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h5>Project Ref.</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="startDate">Encountered Date</label>
+                                            <input type="text" class="form-control" name="encounteredDate" id="encounteredDate">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label for="exitDate">Status Updated Date</label>
+                                            <input type="text" class="form-control" name="statusUpdatedDate" id="statusUpdatedDate">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mt-3">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Status</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <label for="status">Status</label>
+                                        <select class="selectpicker form-control" data-size="5" id="status" name="status">
+                                            <option value="potential">Potential</option>
+                                            <option value="invested">Invested</option>
+                                            <option value="follow">Invested-Follow on</option>
+                                            <option value="exited">Exited</option>
+                                            <option value="aborted">Aborted</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="priority">Priority</label>
+                                        <select autofoucus class="selectpicker form-control" data-size="5" id="priority" name="priority">
+                                            <option value="l">Low</option>
+                                            <option value="m">Medium</option>
+                                            <option value="h">High</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-lg-6">
+                                        <label for="strategy">Strategy</label>
+                                        <select class="selectpicker form-control" data-size="5" id="strategy" name="strategy">
+                                            {% for strategy in strategies %}<option value="{{strategy.stgy_id}}">{{strategy.strategy}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h5>Counterparty</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-lg-12 text-right">
+                                        <button class="btn btn-outline-dark btn-labeled btn-sm mr-2" id="addCp" type="button" onclick="addCpElement()"><span class="oi oi-plus"></span</button>
+                                        <button class="btn btn-outline-dark btn-labeled btn-sm" id="addCp" type="button" onclick="removeCpElement()"><span class="oi oi-minus"></span</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        Counterparty
+                                    </div>
+                                    <div class="col-lg-6">
+                                        Role of counterparty
+                                    </div>
+                                </div>
+                                <div id="counterpartyGroup">
+                                    <div class="row">
+                                        <div class="col-lg-6 mt-2">
+                                            <select class="selectpicker form-control" data-live-search="true" data-size="5" id="cp1" name="cp1">
+                                                {% for counterparty in counterpartries %}<option value="{{counterparty.cp_id}}">{{counterparty.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <select class="selectpicker form-control mt-2" data-live-search="true" data-size="5" id="cp2" name="cp2">
+                                                {% for counterparty in counterpartries %}<option value="{{counterparty.cp_id}}">{{counterparty.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <select class="selectpicker form-control mt-2" data-live-search="true" data-size="5" id="cp3" name="cp3">
+                                                {% for counterparty in counterpartries %}<option value="{{counterparty.cp_id}}">{{counterparty.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <select class="selectpicker form-control mt-2" data-live-search="true" data-size="5" id="cp4" name="cp4">
+                                                {% for counterparty in counterpartries %}<option value="{{counterparty.cp_id}}">{{counterparty.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <select class="selectpicker form-control mt-2" data-live-search="true" data-size="5" id="cp5" name="cp5">
+                                                {% for counterparty in counterpartries %}<option value="{{counterparty.cp_id}}">{{counterparty.name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-6 mt-2">
+                                            <select class="selectpicker form-control" data-size="5" id="role1" name="role1">
+                                                {% for role in roles %}<option value="{{role.role_id}}">{{role.roleName}}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <select class="selectpicker form-control mt-2" data-size="5" id="role2" name="role2">
+                                                {% for role in roles %}<option value="{{role.role_id}}">{{role.roleName}}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <select class="selectpicker form-control mt-2" data-size="5" id="role3" name="role3">
+                                                {% for role in roles %}<option value="{{role.role_id}}">{{role.roleName}}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <select class="selectpicker form-control mt-2" data-size="5" id="role4" name="role4">
+                                                {% for role in roles %}<option value="{{role.role_id}}">{{role.roleName}}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <select class="selectpicker form-control mt-2" data-size="5" id="role5" name="role5">
+                                                {% for role in roles %}<option value="{{role.role_id}}">{{role.roleName}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-lg-5">
+                    </div>
+                    <div class="col-lg-3">
+                        <button class="btn btn-success btn-lg btn-block" id="submitButton" type="submit">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <script type="text/javascript" src="O:\Adam\Project\Deals Report\Kelly working\static\addCounterparty.js"></script>
+        <script type="text/javascript" src="O:\Adam\Project\Deals Report\Kelly working\static\addInvestmentManager.js"></script>
+        <script type="text/javascript" src="O:\Adam\Project\Deals Report\Kelly working\static\datepickerEnabler.js"></script>
+        <script type="text/javascript" src="O:\Adam\Project\Deals Report\Kelly working\static\inputValidation.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#startDate').datepicker({
+                    format: "yyyy-mm-dd",
+                    autoclose: true,
+                    todayHighlight: true,
+                    clearBtn: true
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#exitDate').datepicker({
+                    format: "yyyy-mm-dd",
+                    autoclose: true,
+                    todayHighlight: true,
+                    clearBtn: true
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#statusUpdatedDate').datepicker({
+                    format: "yyyy-mm-dd",
+                    autoclose: true,
+                    todayHighlight: true,
+                    clearBtn: true
+                });
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#encounteredDate').datepicker({
+                    format: "yyyy-mm-dd",
+                    autoclose: true,
+                    todayHighlight: true,
+                    clearBtn: true
+                });
+            });
+        </script>
+   </body>
+</html>
