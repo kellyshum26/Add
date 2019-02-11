@@ -276,53 +276,8 @@
         <script type="text/javascript" src="O:\Adam\Project\Deals Report\Kelly working\static\addInvestmentManager.js"></script>
         <script type="text/javascript" src="O:\Adam\Project\Deals Report\Kelly working\static\datepickerEnabler.js"></script>
         <script type="text/javascript" src="O:\Adam\Project\Deals Report\Kelly working\static\inputValidation.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function(){
-                $('#startDate').datepicker({
-                    format: "yyyy-mm-dd",
-                    autoclose: true,
-                    todayHighlight: true,
-                    clearBtn: true
-                });
-                $( "#startDate" ).datepicker( "setDate", new Date()).on('changeDate', function(){
-                     // set the "statusUpdatedDate" start to not be earlier than "encounteredDate" start:
-                        $('#exitDate').datepicker(
-                            'setStartDate', new Date($(this).val()));
-                        $('#exitDate').datepicker(
-                            'setDate', new Date($(this).val()));
-                });
+        <script type="text/javascript" src="O:\Adam\Project\Deals Report\Kelly working\static\startexitDate.js"></script>
+        <script type="text/javascript" src="O:\Adam\Project\Deals Report\Kelly working\static\encounteredDate.js"></script>
 
-                $('#exitDate').datepicker({
-                    format: "yyyy-mm-dd",
-                    autoclose: true,
-                    todayHighlight: true,
-                    clearBtn: true
-                });
-                $( "#exitDate" ).datepicker( "setDate", new Date($('#startDate').val()));
-
-          });
-        </script>
-        <script type="text/javascript">
-
-            $(document).ready(function(){
-                $('#statusUpdatedDate').datepicker({
-                    format: "yyyy-mm-dd",
-                    autoclose: true,
-                    todayHighlight: true,
-                    clearBtn: true
-                });
-                $( "#statusUpdatedDate" ).datepicker( "setDate", new Date());
-
-
-
-                $('#encounteredDate').datepicker({
-                    format: "yyyy-mm-dd",
-                    autoclose: true,
-                    todayHighlight: true,
-                    clearBtn: true
-                });
-                $( "#encounteredDate" ).datepicker( "setDate", new Date());
-            });
-        </script>
    </body>
 </html>
